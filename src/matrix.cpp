@@ -1,10 +1,9 @@
-#include "regress.h"
+#include "./matrix.h"
 
 #include <algorithm>
-#include <boost>
-#include <exception>
 #include <iostream>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 Matrix::Matrix(int i, int j)
@@ -26,9 +25,9 @@ Matrix& Matrix::operator=(const Matrix& m) noexcept {
 Matrix Matrix::invert() const {
   auto det = (*this).determinant();
   if (det == 0) {
-    throw MatrixError("Can't find inverse; determinant = 0");
+    throw std::runtime_error("Can't find inverse; determinant = 0");
   } else if (length() != height()) {
-    throw MatrixError("Can't find inverse of non-square matrix");
+    throw std::runtime_error("Can't find inverse of non-square matrix");
   }
 
   Matrix matrix(length(), height());
@@ -52,7 +51,7 @@ Matrix Matrix::transpose() const {
 
 Matrix Matrix::minor(std::size_t i, std::size_t j) const{
   if (i >= length() || j >= height()) {
-    throw MatrixError("Parameters too large to form minor matrix"); 
+    throw std::runtime_error("Parameters too large to form minor matrix"); 
   }
 
   int addOnX = 0, addOnY = 0;
@@ -71,7 +70,7 @@ Matrix Matrix::minor(std::size_t i, std::size_t j) const{
 
 double Matrix::determinant() const {
   if (length() != height()) {
-    throw MatrixError("Determinant only calculable for square matrices");
+    throw std::runtime_error("Determinant only calculable for square matrices");
 
   }
   if (length() == 2) {
@@ -101,7 +100,7 @@ std::vector<double> Matrix::operator[](const int& i) const {
 Matrix operator+(const Matrix& lhs, const Matrix& rhs)
 {
   if (lhs.length() != rhs.length() || lhs.height() != rhs.height()) {
-    throw MatrixError("Matrices don't have matching dimensions.");
+    throw std::runtime_error("Matrices don't have matching dimensions.");
   }
   Matrix matrix = lhs;
   for (std::size_t i = 0; i < lhs.length(); ++i) {
@@ -115,7 +114,8 @@ Matrix operator+(const Matrix& lhs, const Matrix& rhs)
 Matrix operator*(const Matrix& lhs, const Matrix& rhs)
 {
   if (lhs.height() != rhs.length()) {
-    throw MatrixError("Matrices don't have matching dimensions.");
+    throw std::runtime_error("Matrices don't have matching dimensions.");
+
   }
 
   Matrix matrix(lhs.length(), rhs.height());
@@ -142,11 +142,12 @@ Matrix operator^(const Matrix& lhs, const int& pow) {
   }
 }
 
-Matrix operator<<(std::ostream& os, const Matrix& m) {
+std::ostream& operator<<(std::ostream& os, const Matrix& m) {
   for (std::size_t i = 0; i < m.length(); ++i) {
     for (std::size_t j = 0; j < m.height(); ++j) {
-      os << boost::format("%5.2f ", m[i][j]);
+      os << printf("%5.2f ", m[i][j]);
     }
     os << "\n";
   }
+  return os;
 }

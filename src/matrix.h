@@ -1,8 +1,6 @@
 #ifndef SRC_REGRESS_H_
 #define SRC_REGRESS_H_
 
-#include <boost>
-#include <exception>
 #include <string>
 #include <vector>
 
@@ -44,7 +42,7 @@ class Matrix {
       friend Matrix operator/(const Matrix& lhs, const Matrix& rhs);
       friend Matrix operator^(const Matrix& lhs, const int& pow);
 
-      friend std::ostream operator<<(std::ostream& os, const Matrix& m);
+      friend std::ostream& operator<<(std::ostream& os, const Matrix& m);
       
 
 
@@ -52,6 +50,7 @@ class Matrix {
 
 };
 
+/*
 class MatrixError: public std::exception
 {
   public:
@@ -64,5 +63,6 @@ class MatrixError: public std::exception
 
 
 };
+*/
 
 #endif
