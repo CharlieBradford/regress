@@ -1,5 +1,6 @@
 //#include "catch.hpp"
 #include "matrix.h"
+#include "regression.h"
 
 #include <iostream>
 #include <vector>
@@ -101,5 +102,43 @@ int main() {
   std::vector<double> row{1, 0, 4, 3, 4};
   x.addRow(row);
   std::cout << x << std::endl;
+
+  std::cout << "First regression test" << std::endl;
+
+  std::vector<double> yrow{7};
+  y.addRow(yrow);
+  std::cout << Regression(x, y) << std::endl;
+  std::cout << Regression(x, y).t_stats() << std::endl;
+
+  std::cout << "Residuals:" << std::endl;
+
+  std::cout << Regression(x, y).residuals() << std::endl;
+
+  std::cout << "SSR:" << std::endl;
+
+  std::cout << Regression(x, y).ssr() << std::endl;
+
+  std::cout << "R2:" << std::endl;
+
+  std::cout << Regression(x, y).R2() << std::endl;
+
+
+  std::cout << "Interaction test:" << std::endl;
+
+  auto reg = InteractionRegression(x, y);
+  std::cout << reg.regress({1, 2, 3, 4}) << std::endl;
+
+  std::cout << "T stats" << std::endl;
+
+  std::cout << reg.t_stats() << std::endl;
+
+  std::cout << "Variances" << std::endl;
+
+  std::cout << reg.variances() << std::endl;
+
+  std::cout << "Residuals:" << std::endl;
+
+  std::cout << reg.residuals() << std::endl;
+  std::cout << reg.R2() << std::endl;
 
 }

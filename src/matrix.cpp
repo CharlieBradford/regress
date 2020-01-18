@@ -31,8 +31,9 @@ void Matrix::addRow(std::vector<double> row) {
 void Matrix::addCol(std::vector<double> col) {
 	if (col.size() != length())
 		throw std::runtime_error("Column mismatched with vector");
-	for (std::size_t i = 0; i < height(); ++i) 
+	for (std::size_t i = 0; i < length(); ++i){
 		values_[i].push_back(col[i]);
+  }
 }
 
 Matrix Matrix::invert() const {
@@ -62,6 +63,15 @@ Matrix Matrix::transpose() const {
 		}
 	}
 	return matrix;
+}
+
+Matrix Matrix::diagonal() const {
+  if (height() != length()) 
+    throw std::runtime_error("Can only take diagonal of a square matrix");
+  Matrix matrix(height(), 1);
+  for (std::size_t i = 0; i < height(); ++i)
+    matrix[i][0] = (*this)[i][i];
+  return matrix;
 }
 
 Matrix Matrix::takeMinor(std::size_t i, std::size_t j) const{
@@ -127,24 +137,35 @@ Matrix operator+(const Matrix& lhs, const Matrix& rhs)
 	return matrix;
 }
 
+Matrix operator-(const Matrix& lhs, const Matrix& rhs) {
+  return lhs + (-1 * rhs);
+}
+
 Matrix operator*(const Matrix& lhs, const Matrix& rhs)
 {
-	if (lhs.height() != rhs.length()) {
+	if (lhs.height() != rhs.length()) 
 		throw std::runtime_error("Matrices don't have matching dimensions.");
-
-	}
 
 	Matrix matrix(lhs.length(), rhs.height());
 	for (std::size_t i = 0; i < lhs.length(); ++i) {
 		for (std::size_t j = 0; j < rhs.height(); ++j) {
 			for (std::size_t k = 0; k < rhs.length(); ++k) {
 				matrix[i][j] += (lhs[i][k] * rhs[k][j]);
-//				std::cout << "Point: " << i << ", " << j << " = " << matrix[i][j] << std::endl;
 			}
 		}
 	}
 
 	return matrix;
+}
+
+Matrix operator*(const double& lhs, const Matrix& rhs) {
+  Matrix matrix = rhs;
+  for (std::size_t i = 0; i < rhs.length(); ++i) {
+		for (std::size_t j = 0; j < rhs.height(); ++j) {
+      matrix[i][j] *= lhs;
+    }
+  }
+  return matrix;
 }
 
 Matrix operator/(const Matrix& lhs, const Matrix& rhs) {

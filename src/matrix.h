@@ -32,6 +32,7 @@ class Matrix {
       Matrix invert() const;
       Matrix transpose() const;
       Matrix takeMinor(std::size_t i, std::size_t j) const;
+      Matrix diagonal() const;
       double determinant() const;
 
       std::vector<double>& operator[](const int& i);
@@ -39,6 +40,7 @@ class Matrix {
 
       friend Matrix operator+(const Matrix& lhs, const Matrix& rhs);
       friend Matrix operator*(const Matrix& lhs, const Matrix& rhs);
+      friend Matrix operator*(const double& lhs, const Matrix& rhs);
       friend Matrix operator-(const Matrix& lhs, const Matrix& rhs);
       friend Matrix operator/(const Matrix& lhs, const Matrix& rhs);
       friend Matrix operator^(const Matrix& lhs, const int& pow);

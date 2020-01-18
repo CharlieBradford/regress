@@ -1,26 +1,22 @@
 cc_library(
-    name="matrixBuild",
+    name="matrix",
     srcs=["matrix.cpp"],
     hdrs=["matrix.h"],
     )
-cc_library(
-    name="catch",
-    srcs=["catch.hpp"],
-    deps=[],)
 
-cc_binary(
-    name="matrix",
-    srcs=["matrix.cpp"],
-    deps=[
-        ":matrixBuild",
-        ],
+cc_library(
+    name="regression",
+    srcs=["regression.cpp",
+          "matrix.cpp"],
+    hdrs=["regression.h",
+          "matrix.h"],
     )
 
-cc_test(
+cc_binary(
     name="matrix_test",
     srcs=["matrix_test.cpp"],
     deps=[
-        ":matrixBuild",
-        ":catch",
+        ":matrix",
+        ":regression"
         ],
     )
