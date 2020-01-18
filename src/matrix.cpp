@@ -1,6 +1,7 @@
 #include "./matrix.h"
 
 #include <algorithm>
+#include <boost/format.hpp>
 #include <iomanip>
 #include <iostream>
 #include <memory>
@@ -183,7 +184,7 @@ Matrix operator^(const Matrix& lhs, const int& pow) {
 std::ostream& operator<<(std::ostream& os, const Matrix& m) {
 	for (std::size_t i = 0; i < m.length(); ++i) {
 		for (std::size_t j = 0; j < m.height(); ++j) {
-			os << std::setw(5) << std::setprecision(5) << m[i][j] << " ";
+			os << boost::format("%10.4f") % m[i][j] << " ";
 		}
 		os << "\n";
 	}

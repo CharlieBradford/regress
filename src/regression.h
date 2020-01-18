@@ -3,7 +3,9 @@
 
 #include "matrix.h"
 
+#include <boost/format.hpp>
 #include <initializer_list>
+#include <iostream>
 
 #define PI 3.1415
 
@@ -17,7 +19,10 @@ class Regression {
 		Regression(Matrix x, Matrix y, std::vector<std::string> labels) : x_{x}, y_{y}, labels_{labels} {};
 
     friend std::ostream& operator<<(std::ostream& os, const Regression& r){
-      os << r.regress();
+      auto reg = r.regress(), tst = r.t_stats();
+      for (std::size_t i = 0; i < r.n_params(); ++i) {
+        std::cout << boost::format("%10.4f\t(%10.4f)\n") % reg[i][0] % tst[i][0];
+      }
       return os;
     }
 
@@ -36,6 +41,9 @@ class Regression {
     double R2() const;
     double schwarz() const { return 0; }
     double akaike() const { return 0; }
+
+    std::size_t n() const { return y_.length(); }
+    virtual std::size_t n_params() const { return x_.height(); }
 
     void read(std::string);
 };
@@ -57,6 +65,8 @@ class InteractionRegression : public Regression {
     void addInteraction(int i, int j);
     void setLog(int i);
     void reset() { interaction_x_ = x_; }
+    
+    std::size_t n_params() const {return interaction_x_.height();}
 
 
     

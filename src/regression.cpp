@@ -1,7 +1,8 @@
 #include "regression.h"
 
-#include <boost.hpp>
+#include <boost/algorithm/string.hpp>
 #include <cmath>
+#include <fstream>
 #include <iostream>
 #include <istream>
 

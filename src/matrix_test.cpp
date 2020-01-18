@@ -108,7 +108,6 @@ int main() {
   std::vector<double> yrow{7};
   y.addRow(yrow);
   std::cout << Regression(x, y) << std::endl;
-  std::cout << Regression(x, y).t_stats() << std::endl;
 
   std::cout << "Residuals:" << std::endl;
 
@@ -126,7 +125,8 @@ int main() {
   std::cout << "Interaction test:" << std::endl;
 
   auto reg = InteractionRegression(x, y);
-  std::cout << reg.regress({1, 2, 3, 4}) << std::endl;
+  reg.regress({1, 2, 3, 4});
+  std::cout << reg << std::endl;
 
   std::cout << "T stats" << std::endl;
 
