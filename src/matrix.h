@@ -8,11 +8,11 @@
 
 class Matrix {
   private:
-    std::vector<std::vector<double>> values_;
+    std::vector<std::vector<double> > values_;
 
 
   public:
-      explicit Matrix(std::vector<std::vector<double>> values) : values_(values) {}
+      explicit Matrix(std::vector<std::vector<double> > values) : values_(values) {}
       Matrix(const Matrix& m) : values_(m.values_) {}
       Matrix(int height, int width);
 

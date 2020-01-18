@@ -1,7 +1,7 @@
 #ifndef src_regression_h
 #define src_regression_h
 
-#include "src/matrix.h"
+#include "matrix.h"
 
 #include <initializer_list>
 
