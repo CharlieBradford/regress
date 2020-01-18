@@ -25,15 +25,22 @@ Matrix Regression::t_stats() const {
   return matrix;
 }
 
-void Regression::read(std::string filename) {
+void Regression::read(std::string filename, bool hasLabels) {
   std::ifstream file(filename);
   std::string line;
+
+  if (hasLabels) {
+    getline(file, line);
+    boost::algorithm::split(vec, line, boost::is_any_of(","));
+
+
+  }
+
 
   while (getline(file, line)) {
     std::vector<std::string> vec;
     boost::algorithm::split(vec, line, boost::is_any_of(","));
   }
-
   
 }
 
